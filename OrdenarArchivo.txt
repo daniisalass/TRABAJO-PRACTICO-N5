@@ -1,0 +1,52 @@
+void MostrarTodasImagenesOrdenadas(struct ListadoDeImagenes *NodoInicial)
+{
+
+struct ListadoDeImagenes *actual = NodoInicial;
+struct ListadoDeImagenes *minimo;
+struct ListadoDeImagenes *temp;
+int tempCodigo;
+char tempNombre[100];
+char tempExtension[100];
+int tempBytes;
+float tempPrecio;
+
+while (actual != NULL)
+{
+	minimo = actual;
+	temp = actual->Siguiente;
+	
+	while (temp != NULL)
+	{
+		if (strcmp(temp->Nombre, minimo->Nombre) < 0)
+		{
+			minimo = temp;
+		}
+		
+		temp = temp->Siguiente;
+	}
+	
+	// Intercambiar los campos de los nodos
+	if (minimo != actual)
+	{
+		tempCodigo = actual->Codigo;
+		strcpy(tempNombre, actual->Nombre);
+		strcpy(tempExtension, actual->Extension);
+		tempBytes=actual->Bytes;
+		tempPrecio=actual->Precio;
+		
+		actual->Codigo = minimo->Codigo;
+		strcpy(actual->Nombre, minimo->Nombre);
+		strcpy(actual->Extension, minimo->Extension);
+		actual->Bytes=minimo->Bytes;
+		actual->Precio=minimo->Precio;
+		
+		minimo->Codigo = tempCodigo;
+		strcpy(minimo->Nombre, tempNombre);
+		strcpy(minimo->Extension, tempExtension);
+		minimo->Bytes=tempBytes;
+		minimo->Precio=tempPrecio;
+	}
+	
+	actual = actual->Siguiente;
+}
+}
